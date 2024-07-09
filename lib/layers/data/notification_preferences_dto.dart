@@ -8,10 +8,10 @@ class NotificationPreferencesDTO extends NotificationPreferences {
     super.push,
   });
 
-  factory NotificationPreferencesDTO.fromRawJson(String str) =>
+  factory NotificationPreferencesDTO.fromJson(String str) =>
       NotificationPreferencesDTO.fromMap(json.decode(str));
 
-  String toRawJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
   factory NotificationPreferencesDTO.fromMap(Map<String, dynamic> json) =>
       NotificationPreferencesDTO(
