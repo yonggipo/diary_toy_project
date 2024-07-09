@@ -11,7 +11,7 @@ final class LocationDTO extends Location {
   });
 
   factory LocationDTO.fromJson(String source) =>
-      LocationDTO.fromMap(json.decode(source) as Map<String, dynamic>);
+      LocationDTO.fromMap(json.decode(source));
 
   String toJson() => json.encode(toMap());
 
