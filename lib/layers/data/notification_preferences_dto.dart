@@ -23,8 +23,4 @@ class NotificationPreferencesDTO extends NotificationPreferences {
         'email': email,
         'push': push,
       };
-
-  NotificationPreferences toDomain() {
-    return this as NotificationPreferences;
-  }
 }

@@ -16,10 +16,10 @@ class SettingsDTO extends Settings {
   String toJson() => json.encode(toMap());
 
   factory SettingsDTO.fromMap(Map<String, dynamic> json) => SettingsDTO(
-        theme: json['email'],
+        theme: json['theme'],
         notificationPreferences: json['notification_preferences'] == null
             ? null
-            : NotificationPreferencesDTO.fromMap(json['location']),
+            : NotificationPreferencesDTO.fromMap(json['notification_preferences']),
         privacyLevel: json['privacy_level'],
       );
 
