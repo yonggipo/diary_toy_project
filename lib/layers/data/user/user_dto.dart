@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:diary_toy_project/layers/data/settings_dto.dart';
-import 'package:diary_toy_project/layers/domain/user.dart';
+import 'package:diary_toy_project/layers/data/user/settings_dto.dart';
+import 'package:diary_toy_project/layers/domain/user/user.dart';
 
-class UserDTO extends User {
+final class UserDTO extends User {
   UserDTO({
     super.userIdentifier,
     super.username,
@@ -18,7 +18,7 @@ class UserDTO extends User {
   });
 
   factory UserDTO.fromJson(String source) =>
-      UserDTO.fromMap(json.decode(source) as Map<String, dynamic>);
+      UserDTO.fromMap(json.decode(source));
 
   String toJson() => json.encode(toMap());
 

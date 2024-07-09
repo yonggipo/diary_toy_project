@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-import 'package:diary_toy_project/layers/data/notification_preferences_dto.dart';
-import 'package:diary_toy_project/layers/domain/settings.dart';
+import 'package:diary_toy_project/layers/data/user/notification_preferences_dto.dart';
+import 'package:diary_toy_project/layers/domain/user/settings.dart';
 
-class SettingsDTO extends Settings {
+final class SettingsDTO extends Settings {
   SettingsDTO({
     super.theme,
     super.notificationPreferences,
     super.privacyLevel,
   });
 
-  factory SettingsDTO.fromJson(String str) =>
-      SettingsDTO.fromMap(json.decode(str));
+  factory SettingsDTO.fromJson(String source) =>
+      SettingsDTO.fromMap(json.decode(source));
 
   String toJson() => json.encode(toMap());
 

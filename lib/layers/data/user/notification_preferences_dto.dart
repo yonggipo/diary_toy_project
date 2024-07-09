@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:diary_toy_project/layers/domain/notification_preferences.dart';
+import 'package:diary_toy_project/layers/domain/user/notification_preferences.dart';
 
-class NotificationPreferencesDTO extends NotificationPreferences {
+final class NotificationPreferencesDTO extends NotificationPreferences {
   NotificationPreferencesDTO({
     super.email,
     super.push,
   });
 
-  factory NotificationPreferencesDTO.fromJson(String str) =>
-      NotificationPreferencesDTO.fromMap(json.decode(str));
+  factory NotificationPreferencesDTO.fromJson(String source) =>
+      NotificationPreferencesDTO.fromMap(json.decode(source));
 
   String toJson() => json.encode(toMap());
 

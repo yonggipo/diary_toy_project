@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:diary_toy_project/layers/domain/remainder.dart';
+import 'package:diary_toy_project/layers/domain/remainder/remainder.dart';
 
-class RemainderDTO extends Remainder {
+final class RemainderDTO extends Remainder {
   RemainderDTO({
     super.reminderIdentifer,
     super.userIdentifier,
@@ -17,7 +17,7 @@ class RemainderDTO extends Remainder {
   });
 
   factory RemainderDTO.fromJson(String source) =>
-      RemainderDTO.fromMap(json.decode(source) as Map<String, dynamic>);
+      RemainderDTO.fromMap(json.decode(source));
 
   String toJson() => json.encode(toMap());
 
