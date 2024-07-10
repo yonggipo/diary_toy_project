@@ -1,4 +1,6 @@
-final class Text {
+final class AppText {
+  static const String appName = 'SparkleDiary';
+
   // Nav Items
   static const String diaryMainNavTitle = '내 다이어리';
   static const String diaryDetailNavTitle = '내 다이어리';
@@ -15,6 +17,9 @@ final class Text {
   // TextField Placeholder
   static const String diaryTitleTFPH = '작성하기';
   static const String diaryContentTFPH = '작성하기';
+
+  // Empty View Message
+  static const String emptyContentMessage = '콘텐츠가 비어있습니다\n새로운 콘텐츠를 추가해주세요';
 
   static const Weather weather = Weather();
 }
