@@ -1,3 +1,5 @@
+import 'package:diary_toy_project/app_text.dart';
+
 enum DiaryCategory {
   concert, // 콘서트
   afterParty, // 뒷풀이
@@ -8,11 +10,11 @@ extension DiaryCategoryExt on DiaryCategory {
   String get title {
     switch (this) {
       case DiaryCategory.concert:
-        return '콘서트';
+        return AppText.concert;
       case DiaryCategory.afterParty:
-        return '뒷풀이';
+        return AppText.afterParty;
       case DiaryCategory.giveAway:
-        return '현장나눔';
+        return AppText.giveAway;
     }
   }
 }

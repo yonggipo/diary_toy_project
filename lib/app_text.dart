@@ -22,6 +22,10 @@ final class AppText {
   static const String emptyContentMessage = '콘텐츠가 비어있습니다\n새로운 콘텐츠를 추가해주세요';
 
   static const Weather weather = Weather();
+
+  static const String concert = '콘서트';
+  static const String afterParty = '뒷풀이';
+  static const String giveAway = '현장나눔';
 }
 
 // Weather Text
