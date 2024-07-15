@@ -32,11 +32,11 @@ final class TagView extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-      for (int i = 0; i < tags.length; i++) ...[
-        createTagLabel(tags[i]),
-        if (i < tags.length - 1) const Gap(4.0),
+        for (int i = 0; i < tags.length; i++) ...[
+          createTagLabel(tags[i]),
+          if (i < tags.length - 1) const Gap(4.0),
+        ],
       ],
-    ],
     );
   }
 }

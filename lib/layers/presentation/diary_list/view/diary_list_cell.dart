@@ -7,77 +7,45 @@ import '../../../domain/diary/diary.dart';
 import '../../app_color.dart';
 import 'tag_view.dart';
 
-final class DiaryListCell extends StatefulWidget {
+final class DiaryListCell extends StatelessWidget {
   const DiaryListCell({required this.item, super.key});
 
   final Diary item;
 
   @override
-  State<DiaryListCell> createState() {
-    return _DiaryListCellState();
-  }
-}
-
-class _DiaryListCellState extends State<DiaryListCell> {
-  String formatDate(DateTime date) {
-    final year = date.year.toString();
-    final month = date.month.toString().padLeft(2, '0');
-    final day = date.day.toString().padLeft(2, '0');
-    return '$year.$month.$day';
-  }
-
-  @override
-  Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: AppColor.border,
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.circular(8.0),
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppColor.border,
+          width: 1.0,
         ),
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.item.title ?? "",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: AppColor.black,
-                  ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                item.title ?? "",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.black,
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/calendar.svg',
-                    ),
-                    const Gap(4.0),
-                    Text(
-                      widget.item.createdAt?.short ?? "",
-                      style: TextStyle(
-                        color: AppColor.label,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              height: 44,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
+                  SvgPicture.asset(
+                    'assets/icons/calendar.svg',
+                  ),
+                  const Gap(4.0),
                   Text(
-                    textAlign: TextAlign.left,
-                    widget.item.content ?? "",
+                    item.createdAt?.short ?? "",
                     style: TextStyle(
                       color: AppColor.label,
                       fontSize: 11,
@@ -86,11 +54,31 @@ class _DiaryListCellState extends State<DiaryListCell> {
                   ),
                 ],
               ),
+            ],
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            height: 44,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  textAlign: TextAlign.left,
+                  item.content ?? "",
+                  style: TextStyle(
+                    color: AppColor.label,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
-            TagView(tags: widget.item.tags ?? [])
-          ],
-        ),
-      );
+          ),
+          TagView(tags: item.tags ?? [])
+        ],
+      ),
+    );
+  }
 }
 
 extension DateFormatter on DateTime {
