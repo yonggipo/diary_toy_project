@@ -1,12 +1,8 @@
-//  == null
-//     ? []
-//     : List<String>.from(json['episode']!.map((dynamic x) => x)),
-
 import 'dart:convert';
 
 import 'package:diary_toy_project/layers/domain/diary/diary.dart';
-import 'package:diary_toy_project/layers/data/diary/location_dto.dart';
-import 'package:diary_toy_project/layers/data/diary/media_dto.dart';
+import 'package:diary_toy_project/layers/data/dto/diary/location_dto.dart';
+import 'package:diary_toy_project/layers/data/dto/diary/media_dto.dart';
 
 final class DiaryDTO extends Diary {
   DiaryDTO({
@@ -39,7 +35,7 @@ final class DiaryDTO extends Diary {
         weather: map['weather'],
         isPublic: map['is_public'],
         locationList: List<LocationDTO>.from(
-            map['location']?.map((dynamic x) => LocationDTO.fromMap(x))),
+            map['location']?.map((dynamic x) => LocationDTO.fromMap(x)) ?? []),
         entryDate: map['entry_date'] != null
             ? DateTime.parse(map['entry_date'])
             : null,
@@ -51,7 +47,7 @@ final class DiaryDTO extends Diary {
             : null,
         tags: List<String>.from(map['tags']?.map((dynamic x) => x)),
         mediaList: List<MediaDTO>.from(
-            map['media']?.map((dynamic x) => MediaDTO.fromMap(x))),
+            map['media']?.map((dynamic x) => MediaDTO.fromMap(x)) ?? []),
       );
 
   Map<String, dynamic> toMap() => {

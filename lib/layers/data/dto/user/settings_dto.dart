@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:diary_toy_project/layers/data/user/notification_preferences_dto.dart';
+import 'package:diary_toy_project/layers/data/dto/user/notification_preferences_dto.dart';
 import 'package:diary_toy_project/layers/domain/user/settings.dart';
 
 final class SettingsDTO extends Settings {

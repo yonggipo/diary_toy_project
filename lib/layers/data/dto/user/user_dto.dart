@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:diary_toy_project/layers/data/user/settings_dto.dart';
+import 'package:diary_toy_project/layers/data/dto/user/settings_dto.dart';
 import 'package:diary_toy_project/layers/domain/user/user.dart';
 
 final class UserDTO extends User {
