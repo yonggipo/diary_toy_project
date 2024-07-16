@@ -1,6 +1,6 @@
-import 'package:diary_toy_project/layers/domain/coding_key.dart';
-import 'package:diary_toy_project/layers/domain/diary/location.dart';
-import 'package:diary_toy_project/layers/domain/diary/media.dart';
+import '../../application/common/coding_key.dart';
+import 'location.dart';
+import 'media.dart';
 
 class Diary {
   Diary({

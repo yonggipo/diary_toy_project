@@ -1,4 +1,4 @@
-import 'package:diary_toy_project/layers/domain/coding_key.dart';
+import '../../application/common/coding_key.dart';
 
 class Location {
   Location({
