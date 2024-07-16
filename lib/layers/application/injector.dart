@@ -1,10 +1,10 @@
-import 'package:diary_toy_project/layers/domain/usecase/diary_usecase.dart';
-import 'package:diary_toy_project/layers/presentation/diary_list/controller/list_page_controller.dart';
 import 'package:get_it/get_it.dart';
 
 import '../data/default_diary_repository.dart';
 import '../data/source/network/api.dart';
 import '../domain/repository/diary_repository.dart';
+import '../domain/usecase/diary_usecase.dart';
+import '../presentation/diary_list/controller/list_page_controller.dart';
 
 GetIt getIt = GetIt.instance;
 
