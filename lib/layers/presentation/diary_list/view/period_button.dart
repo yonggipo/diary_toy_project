@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-import '../../app_color.dart';
+import '../../../application/common/app_color.dart';
+
+typedef PeriodChanged = void Function(DateTime startDate, DateTime endDate);
 
 class PeriodButton extends StatefulWidget {
-  const PeriodButton({super.key});
+  const PeriodButton({required this.periodChanged, super.key});
+
+  final PeriodChanged periodChanged;
 
   @override
   State<PeriodButton> createState() {
@@ -14,30 +18,31 @@ class PeriodButton extends StatefulWidget {
 }
 
 class _PeriodButtonState extends State<PeriodButton> {
-  late DateTime startDate;
-  late DateTime endDate;
+  late DateTime _startDate;
+  late DateTime _endDate;
 
   @override
   void initState() {
     super.initState();
-    endDate = DateTime.now();
-    startDate = DateTime(endDate.year, endDate.month, 1);
+    _endDate = DateTime.now();
+    _startDate = DateTime(_endDate.year, _endDate.month, 1);
   }
 
   Future<void> _onTap(BuildContext context) async {
     DateTimeRange? pickedRange = await showDateRangePicker(
       context: context,
       initialDateRange: DateTimeRange(
-        start: startDate,
-        end: endDate,
+        start: _startDate,
+        end: _endDate,
       ),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
     if (pickedRange != null) {
       setState(() {
-        startDate = pickedRange.start;
-        endDate = pickedRange.end;
+        _startDate = pickedRange.start;
+        _endDate = pickedRange.end;
+        widget.periodChanged(_startDate, _endDate);
       });
     }
   }
@@ -60,7 +65,7 @@ class _PeriodButtonState extends State<PeriodButton> {
             ),
             const Gap(8.0),
             Text(
-              startDate.toLocal().short,
+              _startDate.toLocal().short,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -78,7 +83,7 @@ class _PeriodButtonState extends State<PeriodButton> {
             ),
             const Gap(8.0),
             Text(
-              endDate.toLocal().short,
+              _endDate.toLocal().short,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,

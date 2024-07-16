@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../../app_color.dart';
+import '../../../application/common/app_color.dart';
 
 final class TagView extends StatelessWidget {
   const TagView({required this.tags, super.key});

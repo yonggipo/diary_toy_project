@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../../application/common/custom_string_convertible.dart';
+
 typedef ValueChanged<T> = void Function(T value);
 
-final class SegmentedControl<T extends Object> extends StatefulWidget {
+final class SegmentedControl<T extends CustomStringConvertible>
+    extends StatefulWidget {
   const SegmentedControl({
     super.key,
     required this.values,
@@ -25,7 +28,7 @@ final class SegmentedControl<T extends Object> extends StatefulWidget {
   State<SegmentedControl<T>> createState() => _SegmentedControlState<T>();
 }
 
-final class _SegmentedControlState<T extends Object>
+final class _SegmentedControlState<T extends CustomStringConvertible>
     extends State<SegmentedControl<T>> {
   late T _currentValue;
 
@@ -42,7 +45,7 @@ final class _SegmentedControlState<T extends Object>
       children: [
         for (int i = 0; i < widget.values.length; i++) ...[
           ValueButton(
-            title: widget.values[i].toString(),
+            title: widget.values[i].toCustomString(),
             onPressed: () {
               setState(() {
                 _currentValue = widget.values[i];
@@ -88,9 +91,9 @@ final class ValueButton extends StatelessWidget {
       style: TextButton.styleFrom(
         textStyle: TextStyle(
           fontSize: 12,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.w300,
+          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
