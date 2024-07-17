@@ -41,7 +41,8 @@ final class _SegmentedControlState<T extends CustomStringConvertible>
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (int i = 0; i < widget.values.length; i++) ...[
           ValueButton(
@@ -87,22 +88,24 @@ final class ValueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(
-          fontSize: 12,
-          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
-        ),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7.0),
-        shape: RoundedRectangleBorder(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
+          color:
+              isSelected ? selectedBackgroundColor : unSelectedBackgroundColor,
         ),
-        foregroundColor: isSelected ? selectedColor : unSelectedColor,
-        backgroundColor:
-            isSelected ? selectedBackgroundColor : unSelectedBackgroundColor,
+        child: Text(
+          title,
+          style: TextStyle(
+            color: isSelected ? selectedColor : unSelectedColor,
+            fontSize: 12,
+            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
+          ),
+        ),
       ),
-      onPressed: onPressed,
-      child: Text(title),
     );
   }
 }
