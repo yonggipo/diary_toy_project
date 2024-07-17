@@ -17,7 +17,7 @@ extension DiaryListText on AppText {
 
 // MARK: - Diary Detail
 
-extension DiaryDetailText on AppText {
+extension DiaryDetailsText on AppText {
   /// Tag: Nav Items
   static const String navTitle = '다이어리 작성하기';
 
@@ -27,7 +27,10 @@ extension DiaryDetailText on AppText {
   /// Tag: TextField Placeholder
   static const String titlePlaceholder = '제목을 입력해주세요';
   static const String contentPlaceholder = '내용을 입력해주세요';
-  static const String tagPlaceholder = '#콘서트 #뒷풀이';
+  static const String tagPlaceholder = '# , \\" \\" 을 사용하여 구분해주세요';
+
+  /// Tag: TextField Text
+  static const String tagText = '#콘서트 #뒷풀이';
 
   /// Tag: Label
   static const String weather = '날씨';
@@ -45,8 +48,9 @@ extension TagText on AppText {
 // MARK: - Weather
 
 extension WeatherText on AppText {
-  static const String cloud = '흐림';
+  static const String cloudy = '흐림';
   static const String sunny = '화창함';
   static const String rain = '비';
+  static const String snow = '눈';
   static const String hot = '더움';
 }
