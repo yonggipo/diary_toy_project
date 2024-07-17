@@ -1,5 +1,5 @@
-import 'package:diary_toy_project/layers/domain/coding_key.dart';
-import 'package:diary_toy_project/layers/domain/user/settings.dart';
+import '../../application/common/coding_key.dart';
+import 'settings.dart';
 
 class User {
 

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:diary_toy_project/layers/domain/diary/diary.dart';
-import 'package:diary_toy_project/layers/data/dto/diary/location_dto.dart';
-import 'package:diary_toy_project/layers/data/dto/diary/media_dto.dart';
+import '../../../application/utils/date_formatter.dart';
+import '../../../domain/diary/diary.dart';
+import 'location_dto.dart';
+import 'media_dto.dart';
 
 final class DiaryDTO extends Diary {
   DiaryDTO({
@@ -15,6 +16,7 @@ final class DiaryDTO extends Diary {
     super.isPublic,
     super.locationList,
     super.entryDate,
+    super.postAt,
     super.createdAt,
     super.updatedAt,
     super.tags,
@@ -60,9 +62,10 @@ final class DiaryDTO extends Diary {
         'is_public': isPublic,
         'location':
             locationList?.map((x) => (x as LocationDTO).toMap()).toList() ?? [],
-        'entry_date': entryDate?.millisecondsSinceEpoch,
-        'created_at': createdAt?.millisecondsSinceEpoch,
-        'updated_at': updatedAt?.millisecondsSinceEpoch,
+        'entry_date': entryDate?.iso,
+        'post_at': postAt?.iso,
+        'created_at': createdAt?.iso,
+        'updated_at': updatedAt?.iso,
         'tags': tags,
         'media': mediaList?.map((x) => (x as MediaDTO).toMap()).toList() ?? [],
       };

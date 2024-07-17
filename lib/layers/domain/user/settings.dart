@@ -1,5 +1,5 @@
-import 'package:diary_toy_project/layers/domain/coding_key.dart';
-import 'package:diary_toy_project/layers/domain/user/notification_preferences.dart';
+import '../../application/common/coding_key.dart';
+import 'notification_preferences.dart';
 
 class Settings {
   Settings({this.theme, this.notificationPreferences, this.privacyLevel});

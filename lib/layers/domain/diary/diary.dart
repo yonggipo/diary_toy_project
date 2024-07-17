@@ -13,6 +13,7 @@ class Diary {
     this.isPublic,
     this.locationList,
     this.entryDate,
+    this.postAt,
     this.createdAt,
     this.updatedAt,
     this.tags,
@@ -41,6 +42,9 @@ class Diary {
 
   @CodingKey('entry_date')
   DateTime? entryDate;
+
+  @CodingKey('post_at')
+  DateTime? postAt;
 
   @CodingKey('created_at')
   DateTime? createdAt;
