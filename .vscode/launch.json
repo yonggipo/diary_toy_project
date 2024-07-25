@@ -8,21 +8,21 @@
             "name": "diary_toy_project",
             "request": "launch",
             "type": "dart",
-            "program": "lib/layers/main.dart"
+            "program": "lib/main.dart"
         },
         {
             "name": "diary_toy_project (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
-            "program": "lib/layers/main.dart"
+            "program": "lib/main.dart"
         },
         {
             "name": "diary_toy_project (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",
-            "program": "lib/layers/main.dart"
+            "program": "lib/main.dart"
         }
     ]
 }

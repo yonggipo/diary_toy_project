@@ -37,8 +37,8 @@ final class DiaryListCell extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  item.title ?? "",
-                  style: TextStyle(
+                  item.title,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: AppColor.black,
@@ -52,8 +52,8 @@ final class DiaryListCell extends StatelessWidget {
                     ),
                     const Gap(4.0),
                     Text(
-                      item.createdAt?.short ?? "",
-                      style: TextStyle(
+                      item.createdAt.short,
+                      style: const TextStyle(
                         color: AppColor.label,
                         fontSize: 11,
                         fontWeight: FontWeight.w400,
@@ -71,8 +71,8 @@ final class DiaryListCell extends StatelessWidget {
                 children: [
                   Text(
                     textAlign: TextAlign.left,
-                    item.content ?? "",
-                    style: TextStyle(
+                    item.content,
+                    style: const TextStyle(
                       color: AppColor.label,
                       fontSize: 11,
                       fontWeight: FontWeight.w400,
