@@ -16,22 +16,27 @@ final class DiaryListController extends GetxController {
   final DateTime endDate = DateTime.now();
   late final DateTime startDate = DateTime(endDate.year, endDate.month, 1);
   final status = ListPageStatus.initial.obs;
-  // final status = ValueNotifier(ListPageStatus.initial);
-  final diaries = ValueNotifier(<Diary>[]);
+  final diaries = <Diary>[].obs;
+  List<Diary> _diaries = [];
+
+  List<Diary> filterTagAndDateRange() => diaries.value =
+      _diaries.where((e) => hasTag(e.tags) && isInRange(e.createdAt)).toList();
 
   void updatePeriod(DateTime startDate, DateTime endDate) {
     startDate = startDate;
     endDate = endDate;
+    filterTagAndDateRange();
   }
 
   void updateTags(Tag tag) {
     currentTag = tag;
+    filterTagAndDateRange();
   }
 
-  bool hasTag({List<String>? tags}) =>
+  bool hasTag(List<String>? tags) =>
       tags?.contains(currentTag.toCustomString()) ?? false;
 
-  bool isInRange({DateTime? date}) =>
+  bool isInRange(DateTime? date) =>
       date != null &&
       date.isAfter(startDate) &&
       date.isBefore(endDate.add(const Duration(days: 1)));
@@ -42,6 +47,7 @@ final class DiaryListController extends GetxController {
   onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('🌕🌕🌕🌕🌕 initial fetch list');
       fetchDiaryList();
     });
   }
@@ -50,12 +56,11 @@ final class DiaryListController extends GetxController {
 
   Future<void> fetchDiaryList() async {
     status.value = ListPageStatus.loading;
-    late final List<Diary> list;
     try {
       final response = await dio.post(
           '${Secrets.baseURL}diary/list?user_id=${Secrets.userIdentifier}');
 
-      list = (response.data!['entries'] as List<dynamic>)
+      _diaries = (response.data!['entries'] as List<dynamic>)
           .map((e) => Diary.fromMap(e))
           .toList();
     } catch (e) {
@@ -63,7 +68,7 @@ final class DiaryListController extends GetxController {
       rethrow;
     }
 
-    diaries.value = diaries.value..addAll(list);
+    diaries.value = _diaries;
     status.value = ListPageStatus.success;
   }
 

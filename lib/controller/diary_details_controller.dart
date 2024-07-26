@@ -36,6 +36,8 @@ final class DiaryDetailsController extends GetxController {
     }
   }
 
+  // MAKR: - API
+
   Future<Diary> updateDiary() async {
     try {
       final response = await dio.put(
@@ -51,6 +53,7 @@ final class DiaryDetailsController extends GetxController {
           "tags": diary.tags ?? []
         },
       );
+      print('🍄🍄🍄🍄🍄 did update diary');
       return Diary.fromMap((response.data as dynamic));
     } catch (e) {
       print('Unexpected error: $e');
@@ -72,6 +75,7 @@ final class DiaryDetailsController extends GetxController {
           "tags": diary.tags ?? []
         },
       );
+      print('🍄🍄🍄🍄🍄 did save diary');
       return Diary.fromMap((response.data as dynamic));
     } catch (e) {
       print('Unexpected error: $e');

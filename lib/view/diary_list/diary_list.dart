@@ -48,23 +48,25 @@ class DiaryList extends GetView<DiaryListController> {
               ),
               const Gap(24),
               Expanded(
-                child: (controller.status.value == ListPageStatus.initial)
-                    ? const LoadingIndicator()
-                    : ((controller.diaries.value.isEmpty)
-                        ? const EmptyView()
-                        : ListView.builder(
-                            itemCount: controller.diaries.value.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: DiaryListCell(
-                                  item: controller.diaries.value[index],
-                                  onListItemTap: controller.updateDiary,
-                                ),
-                              );
-                            },
-                          )),
+                child: Obx(
+                  () => (controller.status.value == ListPageStatus.initial)
+                      ? const LoadingIndicator()
+                      : ((controller.diaries.isEmpty)
+                          ? const EmptyView()
+                          : ListView.builder(
+                              itemCount: controller.diaries.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: DiaryListCell(
+                                    item: controller.diaries[index],
+                                    onListItemTap: controller.updateDiary,
+                                  ),
+                                );
+                              },
+                            )),
+                ),
               ),
               const Gap(24),
               Padding(
