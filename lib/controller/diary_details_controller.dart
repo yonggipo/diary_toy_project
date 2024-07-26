@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../application/common/config/secrets.dart';
@@ -9,6 +10,41 @@ import '../model/weather.dart';
 enum DetailsPageStatus { initial, loading, success, failed }
 
 enum DetailsPageKind { add, update }
+
+final class AlertAction {
+  const AlertAction({this.title, this.onTap});
+
+  final title;
+  final onTap;
+}
+
+Future<void> showAlert({
+  required context,
+  required String title,
+  required String body,
+  required List<AlertAction> actions,
+}) async {
+  return showDialog<void>(
+    context: context,
+    // barrierDismissible: false,
+    builder: (BuildContext context) => AlertDialog(
+      title: Text(title),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            Text(body),
+          ],
+        ),
+      ),
+      actions: actions
+          .map((e) => TextButton(
+                onPressed: e.onTap,
+                child: Text(e.title),
+              ))
+          .toList(),
+    ),
+  );
+}
 
 final class DiaryDetailsController extends GetxController {
   DiaryDetailsController({required this.diary, required this.kind});
@@ -33,6 +69,51 @@ final class DiaryDetailsController extends GetxController {
     } catch (e) {
       print('Unexpected error: $e');
       rethrow;
+    }
+  }
+
+  bool isValid() {
+    // title validation
+    var trimmed = diary.title.trim();
+    print('🐳🐳🐳 - trimmed: $trimmed');
+    return trimmed.isNotEmpty;
+  }
+
+  void saveDiary({required BuildContext context}) async {
+    if (!isValid()) {
+      showAlert(
+        context: context,
+        title: '',
+        body: '제목을 입력해주세요',
+        actions: [
+          AlertAction(
+            title: '확인',
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    } else {
+      showAlert(
+        context: context,
+        title: '',
+        body: '저장하겠습니까?',
+        actions: [
+          AlertAction(
+              title: '네',
+              onTap: () {
+                (kind == DetailsPageKind.add) ? addDiary() : updateDiary();
+                Navigator.of(context).pop();
+              }),
+          AlertAction(
+            title: '아니오',
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
     }
   }
 
@@ -83,29 +164,3 @@ final class DiaryDetailsController extends GetxController {
     }
   }
 }
-
-// final class DiaryDetailsController {
-//   DiaryDetailsController({required this.diaryUsecase});
-
-//   final DiaryUsecase diaryUsecase;
-
-//   late Diary diary;
-//   late DetailsPageKind kind;
-//   final ValueNotifier<DetailsPageStatus> status =
-//       ValueNotifier(DetailsPageStatus.initial);
-
-//   final savedDiary = ValueNotifier(Diary());
-//   // final currentPage = ValueNotifier(1);
-//   // final isLastPage = ValueNotifier(false);
-
-//   Future<void> add({required Diary entry}) async {
-//     if (kind == DetailsPageKind.update) return;
-
-//     status.value = DetailsPageStatus.loading;
-
-//     final added = await diaryUsecase.add(entry: entry);
-//     status.value = DetailsPageStatus.success;
-//     savedDiary.value = added;
-//   }
-// }
-

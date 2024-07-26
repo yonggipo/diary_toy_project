@@ -99,9 +99,7 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
                 child: MainButton(
                   title: AppText.saveDiary,
                   onPressed: () {
-                    (controller.kind == DetailsPageKind.add)
-                        ? controller.addDiary()
-                        : controller.updateDiary();
+                    controller.saveDiary(context: context);
                   },
                 ),
               ),
