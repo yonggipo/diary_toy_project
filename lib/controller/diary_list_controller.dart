@@ -19,18 +19,18 @@ final class DiaryListController extends GetxController {
   final diaries = <Diary>[].obs;
   List<Diary> _diaries = [];
 
-  List<Diary> filterTagAndDateRange() => diaries.value =
+  List<Diary> applyListSnapshot() => diaries.value =
       _diaries.where((e) => hasTag(e.tags) && isInRange(e.createdAt)).toList();
 
   void updatePeriod(DateTime startDate, DateTime endDate) {
     startDate = startDate;
     endDate = endDate;
-    filterTagAndDateRange();
+    applyListSnapshot();
   }
 
   void updateTags(Tag tag) {
     currentTag = tag;
-    filterTagAndDateRange();
+    applyListSnapshot();
   }
 
   bool hasTag(List<String>? tags) =>
@@ -68,7 +68,7 @@ final class DiaryListController extends GetxController {
       rethrow;
     }
 
-    diaries.value = _diaries;
+    applyListSnapshot();
     status.value = ListPageStatus.success;
   }
 
@@ -92,6 +92,7 @@ final class DiaryListController extends GetxController {
       binding: DiaryDetailsBinding(),
     )?.then((_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        print('🍙🍙🍙 - Did fetch diaries after pop up');
         fetchDiaryList();
       });
     });
@@ -103,6 +104,7 @@ final class DiaryListController extends GetxController {
       binding: DiaryDetailsBinding(diary: diary),
     )?.then((_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        print('🍙🍙🍙 - Did fetch diaries after pop up');
         fetchDiaryList();
       });
     });

@@ -102,8 +102,12 @@ final class DiaryDetailsController extends GetxController {
         actions: [
           AlertAction(
               title: '네',
-              onTap: () {
-                (kind == DetailsPageKind.add) ? addDiary() : updateDiary();
+              onTap: () async {
+                (kind == DetailsPageKind.add)
+                    ? await addDiary()
+                    : await updateDiary();
+                if (!context.mounted) return;
+                Navigator.of(context).pop();
                 Navigator.of(context).pop();
               }),
           AlertAction(
