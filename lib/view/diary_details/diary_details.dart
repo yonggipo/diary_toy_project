@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../application/common/app_color.dart';
 import '../../application/common/app_text.dart';
@@ -95,12 +96,23 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
                     : controller.diary.tags,
                 onTagsChanged: controller.updateTags,
               ),
-              const Gap(24),
-              MainButton(
-                title: AppText.searchAdress,
-                onPressed: () {
-                  controller.searchAddress(context: context);
-                },
+              // const Gap(24),
+              // MainButton(
+              //   title: AppText.searchAdress,
+              //   onPressed: () {
+              //     controller.searchAddress(context: context);
+              //   },
+              // ),
+              SizedBox(
+                width: 100,
+                height: 100,
+                child: GoogleMap(
+                  onMapCreated: controller.onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: controller.center,
+                    zoom: 11.0,
+                  ),
+                ),
               ),
               const Spacer(),
               Padding(
