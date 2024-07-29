@@ -61,6 +61,13 @@ final class DiaryDetailsController extends GetxController {
 
   updateTags(List<String> tags) => diary.tags = tags;
 
+  String? validateText({String? value, String? message}) {
+    final trimmed = value?.trim();
+    final isValid = (trimmed != null && trimmed.isNotEmpty);
+    print('input text value: $value, is valid: $isValid');
+    return isValid ? null : message;
+  }
+
   Future<Diary> detail({required String entryIdentifier}) async {
     try {
       final response =

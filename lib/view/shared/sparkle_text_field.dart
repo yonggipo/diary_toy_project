@@ -1,37 +1,40 @@
+import 'package:diary_toy_project/application/common/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 typedef OnTextChanged = void Function(String text);
 typedef OnTagsChanged = void Function(List<String> tags);
 
 final class SparkleTextField extends StatefulWidget {
-  const SparkleTextField(
-      {super.key,
-      this.text = "",
-      this.onTextChanged,
-      this.placeholder,
-      this.tags,
-      this.onTagsChanged,
-      this.autofocus = false,
-      this.autoTag = false,
-      this.placeholderColor = Colors.grey,
-      this.borderColor = Colors.grey,
-      this.maxLines = 1,
-      this.minLines,
-      this.maxLength});
+  const SparkleTextField({
+    super.key,
+    this.initialValue = "",
+    this.onTextChanged,
+    this.labelText,
+    this.placeholder,
+    this.tags,
+    this.onTagsChanged,
+    this.autofocus = false,
+    this.autoTag = false,
+    this.maxLines = 1,
+    this.minLines,
+    this.maxLength,
+    this.autovalidateMode = AutovalidateMode.disabled,
+    this.validator,
+  });
 
-  final String text;
+  final String initialValue;
+  final String? labelText;
   final OnTextChanged? onTextChanged;
   final List<String>? tags;
   final bool autoTag;
   final OnTagsChanged? onTagsChanged;
   final String? placeholder;
   final bool autofocus;
-  final Color placeholderColor;
-  final Color borderColor;
   final int? maxLines;
   final int? minLines;
   final int? maxLength;
+  final AutovalidateMode autovalidateMode;
+  final FormFieldValidator<String>? validator;
 
   @override
   State<SparkleTextField> createState() => _SparkleTextFieldState();
@@ -43,7 +46,7 @@ final class _SparkleTextFieldState extends State<SparkleTextField> {
   bool _isEditing = false;
   late String _cached = widget.autoTag
       ? convertToTags(widget.tags?.join() ?? "").join(' ')
-      : widget.text;
+      : widget.initialValue;
   final _textEditingController = TextEditingController();
   final _focusNode = FocusNode();
 
@@ -52,8 +55,8 @@ final class _SparkleTextFieldState extends State<SparkleTextField> {
   @override
   void initState() {
     super.initState();
-    if (widget.text.isNotEmpty) {
-      _textEditingController.text = widget.text;
+    if (widget.initialValue.isNotEmpty) {
+      _textEditingController.text = widget.initialValue;
     }
     _textEditingController.addListener(_onTextChanged);
     _focusNode.addListener(_onFocusChange);
@@ -117,10 +120,9 @@ final class _SparkleTextFieldState extends State<SparkleTextField> {
   @override
   Widget build(BuildContext context) {
     final bolder = OutlineInputBorder(
-        borderSide: BorderSide(
-          color: widget.borderColor,
-        ),
-        borderRadius: BorderRadius.circular(10));
+      borderSide: const BorderSide(color: AppColor.border),
+      borderRadius: BorderRadius.circular(10),
+    );
 
     return GestureDetector(
       onTap: () {
@@ -134,7 +136,7 @@ final class _SparkleTextFieldState extends State<SparkleTextField> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(
-                  color: const Color(0xFFDDDDDD),
+                  color: AppColor.border,
                   width: 1.0,
                 ),
               ),
@@ -147,14 +149,16 @@ final class _SparkleTextFieldState extends State<SparkleTextField> {
                 ),
               ),
             )
-          : TextField(
+          : TextFormField(
+              autovalidateMode: widget.autovalidateMode,
+              validator: widget.validator,
               maxLines: widget.maxLines,
               minLines: widget.minLines,
               maxLength: widget.maxLength,
               controller: _textEditingController,
               focusNode: _focusNode,
               autofocus: widget.autofocus,
-              onSubmitted: (value) {
+              onFieldSubmitted: (value) {
                 setState(() {
                   _isEditing = false;
                 });
@@ -165,17 +169,40 @@ final class _SparkleTextFieldState extends State<SparkleTextField> {
               ),
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
                 border: bolder,
                 focusedBorder: bolder,
                 enabledBorder: bolder,
                 errorBorder: bolder,
                 disabledBorder: bolder,
-                // labelText: _cachedText,
+                label: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: widget.labelText,
+                        style: const TextStyle(
+                          color: AppColor.label,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const TextSpan(
+                        text: '*',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 hintText: widget.placeholder,
-                hintStyle: TextStyle(
-                  color: widget.placeholderColor,
+                hintStyle: const TextStyle(
+                  color: AppColor.placeholder,
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
