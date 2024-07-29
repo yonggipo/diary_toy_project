@@ -22,6 +22,12 @@ final class DiaryListController extends GetxController {
   List<Diary> applyListSnapshot() => diaries.value =
       _diaries.where((e) => hasTag(e.tags) && isInRange(e.createdAt)).toList();
 
+  void deleteDiary({required String diaryIdentifier}) {
+    _deleteDiary(entryIdentifier: diaryIdentifier);
+    _diaries.removeWhere((diary) => diary.entryIdentifier == diaryIdentifier);
+    applyListSnapshot();
+  }
+
   void updatePeriod(DateTime startDate, DateTime endDate) {
     startDate = startDate;
     endDate = endDate;
@@ -72,12 +78,13 @@ final class DiaryListController extends GetxController {
     status.value = ListPageStatus.success;
   }
 
-  Future<Diary> deleteDiary({required String entryIdentifier}) async {
+  Future<String> _deleteDiary({required String entryIdentifier}) async {
     try {
       final response = await dio
           .delete('${Secrets.baseURL}diary/?entry_id=$entryIdentifier');
-
-      return Diary.fromMap((response.data as dynamic));
+      var message = response.data['message'];
+      print('delete api response: $message');
+      return message;
     } catch (e) {
       print('Unexpected error: $e');
       rethrow;
