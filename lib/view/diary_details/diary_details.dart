@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../../application/common/app_color.dart';
 import '../../application/common/app_text.dart';
@@ -47,22 +48,26 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
               ),
               const Gap(8.0),
               SparkleTextField(
-                text: controller.diary.title,
+                initialValue: controller.diary.title,
+                labelText: AppText.title,
                 placeholder: AppText.titleHint,
-                placeholderColor: AppColor.placeholder,
-                borderColor: AppColor.border,
                 onTextChanged: controller.updateTitle,
+                autovalidateMode: AutovalidateMode.always,
+                validator: (String? value) {
+                  return controller.validateText(
+                    value: value,
+                    message: '제목을 채워주세요',
+                  );
+                },
               ),
               const Gap(16),
               SparkleTextField(
-                text: controller.diary.content,
+                initialValue: controller.diary.content,
+                labelText: AppText.content,
                 placeholder: AppText.contentHint,
-                placeholderColor: AppColor.placeholder,
-                borderColor: AppColor.border,
                 minLines: 10,
                 maxLines: 10,
                 onTextChanged: controller.updateContent,
-                // maxLength: 260,
               ),
               const Gap(16),
               const Padding(
@@ -85,8 +90,6 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
               const Gap(8.0),
               SparkleTextField(
                 placeholder: AppText.tagHint,
-                placeholderColor: AppColor.placeholder,
-                borderColor: AppColor.border,
                 autoTag: true,
                 tags: (controller.kind == DetailsPageKind.add)
                     ? [AppText.tagExample]
@@ -99,9 +102,7 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
                 child: MainButton(
                   title: AppText.saveDiary,
                   onPressed: () {
-                    (controller.kind == DetailsPageKind.add)
-                        ? controller.addDiary()
-                        : controller.updateDiary();
+                    controller.saveDiary(context: context);
                   },
                 ),
               ),
