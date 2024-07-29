@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kpostal/kpostal.dart';
 
 import '../application/common/config/secrets.dart';
 import '../application/utils/date_formatter.dart';
@@ -69,8 +70,18 @@ final class DiaryDetailsController extends GetxController {
     diary.tags = tags;
   }
 
-  void searchAddress({required BuildContext context}) {
+  void searchAddress({required BuildContext context}) async {
     print('💥💥💥 Did Search Address Button Tapped 💥💥💥');
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => KpostalView(
+          callback: (Kpostal result) {
+            debugPrint(result.toString());
+          },
+        ),
+      ),
+    );
   }
 
   String? validateText({String? value, String? message}) {
