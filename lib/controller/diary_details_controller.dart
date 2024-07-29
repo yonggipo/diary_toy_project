@@ -69,7 +69,7 @@ final class DiaryDetailsController extends GetxController {
     diary.tags = tags;
   }
 
-  void searchAdress({required BuildContext context}) {
+  void searchAddress({required BuildContext context}) {
     print('💥💥💥 Did Search Address Button Tapped 💥💥💥');
   }
 

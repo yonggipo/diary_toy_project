@@ -99,7 +99,7 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
               MainButton(
                 title: AppText.searchAdress,
                 onPressed: () {
-                  controller.searchAdress(context: context);
+                  controller.searchAddress(context: context);
                 },
               ),
               const Spacer(),
