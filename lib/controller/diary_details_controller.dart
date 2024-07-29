@@ -53,13 +53,25 @@ final class DiaryDetailsController extends GetxController {
   final Diary diary;
   final DetailsPageKind kind;
 
-  updateTitle(String title) => diary.title = title;
+  void updateTitle(String title) {
+    diary.title = title;
+  }
 
-  updateContent(String content) => diary.content = content;
+  void updateContent(String content) {
+    diary.content = content;
+  }
 
-  updateWeather(Weather weather) => diary.weather = weather.toCustomString();
+  void updateWeather(Weather weather) {
+    diary.weather = weather.toCustomString();
+  }
 
-  updateTags(List<String> tags) => diary.tags = tags;
+  void updateTags(List<String> tags) {
+    diary.tags = tags;
+  }
+
+  void searchAdress({required BuildContext context}) {
+    print('💥💥💥 Did Search Address Button Tapped 💥💥💥');
+  }
 
   String? validateText({String? value, String? message}) {
     final trimmed = value?.trim();

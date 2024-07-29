@@ -6,12 +6,13 @@ final class AppText {
 
   /// Tag: Button
   static const String saveDiary = '작성완료';
+  static const String searchAdress = '관련 장소 검색';
 
+  /// Tag: TextField
   static const String title = '제목';
   static const String titleHint = '제목을 입력해주세요';
   static const String content = '내용';
   static const String contentHint = '내용을 입력해주세요';
-
   static const String tagHint = '# , \\" \\" 을 사용하여 구분해주세요';
 
   /// Tag: Example

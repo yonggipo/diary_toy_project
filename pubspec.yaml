@@ -39,6 +39,7 @@ dependencies:
   dio: ^5.5.0+1
   gap: ^3.0.1
   get: ^4.6.6
+  kpostal: ^1.0.0
 
 dev_dependencies:
   flutter_test:

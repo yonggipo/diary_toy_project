@@ -95,6 +95,13 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
                     : controller.diary.tags,
                 onTagsChanged: controller.updateTags,
               ),
+              const Gap(24),
+              MainButton(
+                title: AppText.searchAdress,
+                onPressed: () {
+                  controller.searchAdress(context: context);
+                },
+              ),
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
