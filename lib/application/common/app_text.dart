@@ -6,7 +6,7 @@ final class AppText {
 
   /// Tag: Button
   static const String saveDiary = '작성완료';
-  static const String searchAdress = '관련 장소 검색';
+  static const String addAddress = '장소 추가';
 
   /// Tag: TextField
   static const String title = '제목';
@@ -19,6 +19,7 @@ final class AppText {
   static const String tagExample = '#콘서트 #뒷풀이';
 
   /// Tag: Label
+  static const String place = '장소';
   static const String weather = '날씨';
   static const String tag = '태그';
 }

@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kpostal/kpostal.dart';
 
 import '../application/common/config/secrets.dart';
+import '../application/utils/alert.dart';
 import '../application/utils/date_formatter.dart';
 import '../model/diary.dart';
 import '../model/weather.dart';
@@ -12,41 +13,6 @@ import '../model/weather.dart';
 enum DetailsPageStatus { initial, loading, success, failed }
 
 enum DetailsPageKind { add, update }
-
-final class AlertAction {
-  const AlertAction({this.title, this.onTap});
-
-  final title;
-  final onTap;
-}
-
-Future<void> showAlert({
-  required context,
-  required String title,
-  required String body,
-  required List<AlertAction> actions,
-}) async {
-  return showDialog<void>(
-    context: context,
-    // barrierDismissible: false,
-    builder: (BuildContext context) => AlertDialog(
-      title: Text(title),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text(body),
-          ],
-        ),
-      ),
-      actions: actions
-          .map((e) => TextButton(
-                onPressed: e.onTap,
-                child: Text(e.title),
-              ))
-          .toList(),
-    ),
-  );
-}
 
 final class DiaryDetailsController extends GetxController {
   DiaryDetailsController({required this.diary, required this.kind});
@@ -77,6 +43,8 @@ final class DiaryDetailsController extends GetxController {
     diary.tags = tags;
   }
 
+  // MARK: - Location
+
   void searchAddress({required BuildContext context}) async {
     print('💥💥💥 Did Search Address Button Tapped 💥💥💥');
     await Navigator.push(
@@ -91,22 +59,25 @@ final class DiaryDetailsController extends GetxController {
     );
   }
 
+  void updateLocation({required int locationIndex}) async {
+    print('💥💥💥 Did Update Loaction Button Tapped 💥💥💥');
+  }
+
+  void deleteLocation() {
+    //  {
+//                   locations.removeAt(index);
+//                   ScaffoldMessenger.of(context).showSnackBar(
+//                     SnackBar(
+//                       content: Text('$item dismissed'),
+//                     ),
+//                   )
+  }
+
   String? validateText({String? value, String? message}) {
     final trimmed = value?.trim();
     final isValid = (trimmed != null && trimmed.isNotEmpty);
     print('input text value: $value, is valid: $isValid');
     return isValid ? null : message;
-  }
-
-  Future<Diary> detail({required String entryIdentifier}) async {
-    try {
-      final response =
-          await dio.post('${Secrets.baseURL}diary/?entry_id=$entryIdentifier');
-      return Diary.fromMap((response.data as dynamic));
-    } catch (e) {
-      print('Unexpected error: $e');
-      rethrow;
-    }
   }
 
   bool isValid() {
@@ -158,7 +129,18 @@ final class DiaryDetailsController extends GetxController {
     }
   }
 
-  // MAKR: - API
+  // MARK: - API
+
+  Future<Diary> detail({required String entryIdentifier}) async {
+    try {
+      final response =
+          await dio.post('${Secrets.baseURL}diary/?entry_id=$entryIdentifier');
+      return Diary.fromMap((response.data as dynamic));
+    } catch (e) {
+      print('Unexpected error: $e');
+      rethrow;
+    }
+  }
 
   Future<Diary> updateDiary() async {
     try {
