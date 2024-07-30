@@ -118,13 +118,15 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
           aspectRatio: 3 / 2,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.0),
-            child: GoogleMap(
-              onMapCreated: controller.onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: controller.center,
-                zoom: 11.0,
-              ),
-            ),
+            child: Obx(() {
+              return GoogleMap(
+                onMapCreated: controller.onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: controller.center.value,
+                  zoom: controller.zoomLevel.value,
+                ),
+              );
+            }),
           ),
         ),
         const Gap(spacing),

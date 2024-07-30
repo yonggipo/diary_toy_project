@@ -21,7 +21,10 @@ final class DiaryDetailsController extends GetxController {
   final Diary diary;
   final DetailsPageKind kind;
   late GoogleMapController mapController;
-  final LatLng center = const LatLng(45.521563, -122.677433);
+  // N37.4959829° E127.0280101°
+
+  var center = const LatLng(37.4959829, 127.0280101).obs;
+  var zoomLevel = 14.0.obs;
 
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
