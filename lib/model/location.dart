@@ -4,21 +4,20 @@ import '../application/common/coding_key.dart';
 
 class Location {
   Location({
-    this.locationTime,
-    this.latitude,
-    this.longitude,
-    this.placeName,
+    required this.placeName,
+    required this.address,
+    required this.x,
+    required this.y,
   });
 
-  @CodingKey('location_time')
-  DateTime? locationTime;
-
-  double? latitude;
-
-  double? longitude;
-
   @CodingKey('place_name')
-  String? placeName;
+  String placeName;
+
+  String address;
+
+  double x;
+
+  double y;
 
   // MARK: - Mapping
 
@@ -28,18 +27,16 @@ class Location {
   String toJson() => json.encode(toMap());
 
   factory Location.fromMap(Map<String, dynamic> map) => Location(
-        locationTime: map['locationTime'] != null
-            ? DateTime.parse(map['locationTime'])
-            : null,
-        latitude: map['latitude'],
-        longitude: map['longitude'],
-        placeName: map['placeName'],
+        placeName: map['place_name'] ?? "",
+        address: map['address'] ?? "",
+        x: map['x'] ?? 0,
+        y: map['y'] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
-        'location_time': locationTime?.toIso8601String(),
-        'latitude': latitude,
-        'longitude': longitude,
         'place_name': placeName,
+        'address': address,
+        'x': x,
+        'y': y,
       };
 }

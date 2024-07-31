@@ -1,23 +1,26 @@
 final class AppText {
   static const String appName = 'SparkleDiary';
+  static const String font = "Pretendard";
 
   /// Tag: Nav Items
   static const String diaryDetails = '다이어리 작성하기';
 
   /// Tag: Button
   static const String saveDiary = '작성완료';
+  static const String addAddress = '장소 추가';
 
+  /// Tag: TextField
   static const String title = '제목';
   static const String titleHint = '제목을 입력해주세요';
   static const String content = '내용';
   static const String contentHint = '내용을 입력해주세요';
-
   static const String tagHint = '# , \\" \\" 을 사용하여 구분해주세요';
 
   /// Tag: Example
   static const String tagExample = '#콘서트 #뒷풀이';
 
   /// Tag: Label
+  static const String place = '장소';
   static const String weather = '날씨';
   static const String tag = '태그';
 }

@@ -12,5 +12,5 @@ final class AppColor {
   static const selectedColor = Color(0xFFFFFFFF);
   static const unSelectedColor = Color(0xFF5F5F5F);
   static const selectedBackgroundColor = Color(0xFF969696);
-  static const unSelectedBackgroundColor = Color(0xFFD9D9D9);
+  static const unSelectedBackgroundColor = Color(0xFFEEEEEE);
 }
