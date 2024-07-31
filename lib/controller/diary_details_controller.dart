@@ -1,3 +1,4 @@
+import 'package:diary_toy_project/model/location.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,10 +22,12 @@ final class DiaryDetailsController extends GetxController {
   final Diary diary;
   final DetailsPageKind kind;
   late GoogleMapController mapController;
+  final markers = <Marker>{}.obs;
+
   // N37.4959829° E127.0280101°
 
-  var center = const LatLng(37.4959829, 127.0280101).obs;
-  var zoomLevel = 14.0.obs;
+  final center = const LatLng(37.4959829, 127.0280101).obs;
+  final zoomLevel = 14.0.obs;
 
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -54,8 +57,44 @@ final class DiaryDetailsController extends GetxController {
       context,
       MaterialPageRoute(
         builder: (_) => KpostalView(
-          callback: (Kpostal result) {
+          callback: (Kpostal result) async {
             debugPrint(result.toString());
+            debugPrint('lat && lng: ${result.latitude}, ${result.longitude}');
+            final latLng = await result.latLng;
+            final double lat =
+                result.latitude ?? (latLng?.latitude ?? 37.4959829);
+            final double lng =
+                result.longitude ?? (latLng?.longitude ?? 127.0280101);
+
+            final found = Location(
+              placeName: "",
+              address: result.address,
+              x: lat,
+              y: lng,
+            );
+            debugPrint('found location: ${found.toString()}');
+
+            if ((lat != 0) && (lng != 0)) {
+              final center = LatLng(lat, lng);
+              mapController.animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: center,
+                  zoom: 16.0,
+                ),
+              ));
+              debugPrint('did center moved to $lat, $lng');
+
+              final marker = Marker(
+                markerId: MarkerId(result.postCode.toString()),
+                position: center,
+                infoWindow: InfoWindow(
+                  title: found.placeName,
+                  snippet: found.address,
+                ),
+              );
+              markers.clear();
+              markers.add(marker);
+            }
           },
         ),
       ),
