@@ -56,12 +56,24 @@ class DiaryList extends GetView<DiaryListController> {
                           : ListView.builder(
                               itemCount: controller.diaries.length,
                               itemBuilder: (context, index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: DiaryListCell(
-                                    item: controller.diaries[index],
-                                    onListItemTap: controller.updateDiary,
+                                var item = controller.diaries[index];
+                                return Dismissible(
+                                  key: Key(item.entryIdentifier!),
+                                  onDismissed: (direction) {
+                                    controller.deleteDiary(
+                                        diaryIdentifier: item.entryIdentifier!);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text('$item dismissed')));
+                                  },
+                                  background: Container(color: Colors.red),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: DiaryListCell(
+                                      item: controller.diaries[index],
+                                      onListItemTap: controller.updateDiary,
+                                    ),
                                   ),
                                 );
                               },
