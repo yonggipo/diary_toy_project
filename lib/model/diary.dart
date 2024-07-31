@@ -14,14 +14,15 @@ final class Diary {
     this.mood,
     this.weather,
     this.isPublic,
-    this.locationList,
+    List<Location>? locationList,
     this.entryDate,
     this.postAt,
     DateTime? createdAt,
     this.updatedAt,
     this.tags,
     // this.mediaList,
-  }) : createdAt = createdAt ?? DateTime.now();
+  })  : locationList = locationList ?? <Location>[],
+        createdAt = createdAt ?? DateTime.now();
 
   @CodingKey('entry_id')
   String? entryIdentifier;
@@ -41,7 +42,7 @@ final class Diary {
   bool? isPublic;
 
   @CodingKey('location')
-  List<Location>? locationList;
+  List<Location> locationList;
 
   @CodingKey('entry_date')
   DateTime? entryDate;
@@ -99,7 +100,7 @@ final class Diary {
         'mood': mood,
         'weather': weather,
         'is_public': isPublic,
-        'location': locationList?.map((x) => x.toMap()).toList() ?? [],
+        'location': locationList.map((x) => x.toMap()).toList(),
         'entry_date': entryDate?.iso,
         'post_at': postAt?.iso,
         'created_at': createdAt.iso,

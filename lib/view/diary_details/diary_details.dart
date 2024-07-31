@@ -88,33 +88,7 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
                   onTagsChanged: controller.updateTags,
                 ),
                 const Gap(16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SectionLabel(title: AppText.place),
-                    const Gap(12),
-                    AspectRatio(
-                      aspectRatio: 3 / 2,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16.0),
-                        child: Obx(() {
-                          debugPrint(
-                              '(obx) center: ${controller.center.value.toString()}');
-                          return GoogleMap(
-                            onMapCreated: controller.onMapCreated,
-                            initialCameraPosition: CameraPosition(
-                              target: controller.center.value,
-                              zoom: controller.zoomLevel.value,
-                            ),
-                            markers: controller.markers,
-                          );
-                        }),
-                      ),
-                    ),
-                    const Gap(12),
-                    LocationListView(),
-                  ],
-                ),
+                locationSection(context: context),
                 const Gap(16),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
@@ -152,6 +126,7 @@ final class DiaryDetails extends GetView<DiaryDetailsController> {
                   target: controller.center.value,
                   zoom: controller.zoomLevel.value,
                 ),
+                markers: controller.markers.toSet(),
               );
             }),
           ),

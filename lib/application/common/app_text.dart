@@ -1,5 +1,6 @@
 final class AppText {
   static const String appName = 'SparkleDiary';
+  static const String font = "Pretendard";
 
   /// Tag: Nav Items
   static const String diaryDetails = '다이어리 작성하기';

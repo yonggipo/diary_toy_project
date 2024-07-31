@@ -27,7 +27,7 @@ class Location {
   String toJson() => json.encode(toMap());
 
   factory Location.fromMap(Map<String, dynamic> map) => Location(
-        placeName: map['placeName'] ?? "",
+        placeName: map['place_name'] ?? "",
         address: map['address'] ?? "",
         x: map['x'] ?? 0,
         y: map['y'] ?? 0,

@@ -23,6 +23,8 @@ final class DiaryDetailsController extends GetxController {
   final DetailsPageKind kind;
   late GoogleMapController mapController;
   final markers = <Marker>{}.obs;
+  final locations = <Location>[].obs;
+  final selectedIndex = 0.obs;
 
   // N37.4959829° E127.0280101°
 
@@ -51,7 +53,10 @@ final class DiaryDetailsController extends GetxController {
 
   // MARK: - Location
 
-  void searchAddress({required BuildContext context}) async {
+  void searchAddress({
+    required BuildContext context,
+    required int nextIndex,
+  }) async {
     print('💥💥💥 Did Search Address Button Tapped 💥💥💥');
     await Navigator.push(
       context,
@@ -67,7 +72,7 @@ final class DiaryDetailsController extends GetxController {
                 result.longitude ?? (latLng?.longitude ?? 127.0280101);
 
             final found = Location(
-              placeName: "",
+              placeName: result.bname,
               address: result.address,
               x: lat,
               y: lng,
@@ -75,26 +80,10 @@ final class DiaryDetailsController extends GetxController {
             debugPrint('found location: ${found.toString()}');
 
             if ((lat != 0) && (lng != 0)) {
-              final center = LatLng(lat, lng);
-              mapController.animateCamera(CameraUpdate.newCameraPosition(
-                CameraPosition(
-                  target: center,
-                  zoom: 16.0,
-                ),
-              ));
-              debugPrint('did center moved to $lat, $lng');
-
-              final marker = Marker(
-                markerId: MarkerId(result.postCode.toString()),
-                position: center,
-                infoWindow: InfoWindow(
-                  title: found.placeName,
-                  snippet: found.address,
-                ),
-              );
-              markers.clear();
-              markers.add(marker);
+              moveTo(found, nextIndex);
             }
+
+            locations.add(found);
           },
         ),
       ),
@@ -105,14 +94,34 @@ final class DiaryDetailsController extends GetxController {
     print('💥💥💥 Did Update Loaction Button Tapped 💥💥💥');
   }
 
-  void deleteLocation() {
-    //  {
-//                   locations.removeAt(index);
-//                   ScaffoldMessenger.of(context).showSnackBar(
-//                     SnackBar(
-//                       content: Text('$item dismissed'),
-//                     ),
-//                   )
+  void moveTo(Location location, int index) {
+    selectedIndex.value = index;
+    debugPrint('Selected Location Index: $index');
+
+    final center = LatLng(location.x, location.y);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        target: center,
+        zoom: 16.0,
+      ),
+    ));
+    debugPrint('did center moved to $location.x, $location.y');
+
+    final marker = Marker(
+      markerId: MarkerId(location.address),
+      position: center,
+      infoWindow: InfoWindow(
+        title: location.placeName,
+        snippet: location.address,
+      ),
+    );
+    markers.clear();
+    markers.add(marker);
+  }
+
+  void deleteLocation({required int index}) {
+    print('Did Delete Location Button Tapped');
+    locations.removeAt(index - 1);
   }
 
   String? validateText({String? value, String? message}) {
@@ -185,6 +194,13 @@ final class DiaryDetailsController extends GetxController {
   }
 
   Future<Diary> updateDiary() async {
+    debugPrint('placeName: ${locations.toList().first.placeName}');
+    debugPrint('address: ${locations.toList().first.address}');
+    debugPrint('x: ${locations.toList().first.x}');
+    debugPrint('y: ${locations.toSet().first.y}');
+
+    debugPrint(
+        'first: ${locations.toList().map((e) => e.toJson()).toList().toString()}');
     try {
       final response = await dio.put(
         '${Secrets.baseURL}diary/?entry_id=$diary.entryIdentifier',
@@ -196,13 +212,16 @@ final class DiaryDetailsController extends GetxController {
           "mood": "string",
           "weather": diary.weather,
           "post_at": DateTime.now().iso,
-          "tags": diary.tags ?? []
+          "tags": diary.tags ?? [],
+          "locations":
+              locations.toList().map((e) => e.toJson()).toList().toString()
         },
       );
       print('🍄🍄🍄🍄🍄 did update diary');
       return Diary.fromMap((response.data as dynamic));
-    } catch (e) {
-      print('Unexpected error: $e');
+    } on DioException catch (e) {
+      print('Error: ${e.response?.statusCode}');
+      print('Error: ${e.response?.data}');
       rethrow;
     }
   }
@@ -218,7 +237,8 @@ final class DiaryDetailsController extends GetxController {
           "mood": "string",
           "weather": diary.weather,
           "post_at": DateTime.now().iso,
-          "tags": diary.tags ?? []
+          "tags": diary.tags ?? [],
+          "location": locations.toList()
         },
       );
       print('🍄🍄🍄🍄🍄 did save diary');
